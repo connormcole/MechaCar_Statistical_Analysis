@@ -16,6 +16,10 @@ coils_summary <- coils %>% summarize(Mean_PSI=mean(PSI), Median_PSI=median(PSI),
 
 lot_summary <- coils %>% group_by(Manufacturing_Lot) %>% summarize(Mean_PSI=mean(PSI), Median_PSI=median(PSI), Variance_PSI=var(PSI), SD_PSI=sd(PSI), .groups = 'keep') #PSI summary grouped by lot
 
-t.test(coils_summary, mu=1500) #compare the mean difference between overall coils summary and 1500
+t.test(coils$PSI, mu=1500) #compare the mean difference between overall coils summary and 1500
 
-t.test(lot_summary, subset= Manufacturing_Lot == "Lot1", mu=1500) #compare lot 1 to mean
+t.test(subset(coils,Manufacturing_Lot=="Lot1")$PSI,mu = 1500) #compare lot 1 to mean
+
+t.test(subset(coils,Manufacturing_Lot=="Lot2")$PSI,mu = 1500) #compare lot 2 to mean
+
+t.test(subset(coils,Manufacturing_Lot=="Lot3")$PSI,mu = 1500) #compare lot 3 to mean
