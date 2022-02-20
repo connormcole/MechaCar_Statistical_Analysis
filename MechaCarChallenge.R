@@ -9,3 +9,13 @@ cars_mpg <- read.csv(f)
 lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD,data=cars_mpg) #generate multiple linear regression model
 
 summary(lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD,data=cars_mpg)) #summarize linear model
+
+coils <- read.csv('Suspension_Coil.csv',stringsAsFactors = F)
+
+coils_summary <- coils %>% summarize(Mean_PSI=mean(PSI), Median_PSI=median(PSI), Variance_PSI=var(PSI), SD_PSI=sd(PSI), .groups = 'keep') #PSI summary
+
+lot_summary <- coils %>% group_by(Manufacturing_Lot) %>% summarize(Mean_PSI=mean(PSI), Median_PSI=median(PSI), Variance_PSI=var(PSI), SD_PSI=sd(PSI), .groups = 'keep') #PSI summary grouped by lot
+
+t.test(coils_summary, mu=1500) #compare the mean difference between overall coils summary and 1500
+
+t.test(lot_summary, subset= Manufacturing_Lot == "Lot1", mu=1500) #compare lot 1 to mean
